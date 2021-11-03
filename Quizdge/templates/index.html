@@ -8,13 +8,22 @@
     <script>
       var socket = io()
       function sendMessage () {
-        socket.emit("message",document.getElementById("chat-input").value)
+        socket.emit("message",{ "username" : document.getElementById("username").value,
+                                "room" : document.getElementById("room").value
+                              }
+                            )
         }
       socket.on("new_message", (data) => {
         document.getElementById("chat").innerHTML += "<br>" + data
         })
+      socket.on("setroom", (data) => {
+        document.getElementById("roomname").innerHTML = data
+      })
+      })
     </script>
     <div id="chat"></div>
-    <input type="text" id="chat-input"> <button onclick="sendMessage()">Send</button>
+    <input type="text" id="username"><br>
+    <input type="text" id="room"><br>
+    <button onclick="sendMessage()">Send</button>
   </body>
 </html>
